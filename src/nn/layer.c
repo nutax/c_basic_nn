@@ -28,4 +28,14 @@ void nn_layer_input_error(float input_e[], const float output_e[], const float w
         }
     }
 }
-void
+void nn_layer_update(float weight[], float output[], const float input[], const float output_e[], int inputs, int outputs, float rate, void (*dact)(float*, int)){
+    int i, j, neuron;
+    dact(output, outputs);
+    const float *output_d = output;
+    for(i = 0; i<outputs; ++i){
+        neuron = i*inputs;
+        for(j = 0; j < inputs; ++j){
+            weight[neuron+j] = input[j]*output_d[i]*rate;
+        }
+    }
+}
