@@ -1,9 +1,10 @@
 #ifndef _MAIN_H_
 #define _MAIN_H_
 
-#include "hello/hello.h"
 #include <stdlib.h>
-#include "nn/nn.h"
+#include "hello/hello.h"
+#include "nn/layer.h"
+#include "nn/activ.h"
 
 
 
