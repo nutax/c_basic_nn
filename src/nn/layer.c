@@ -1,17 +1,30 @@
 #include "nn/layer.h"
 
-void nn_layer_create(struct nn_layer *layer, int inputs, int outputs){
+void nn_layer_create(float **free_mem, struct nn_layer *layer, int inputs, int outputs){
+    int i;
 
-}
-void nn_layer_destroy(struct nn_layer *layer){
-    
+    layer->outputs = outputs;
+
+    layer->weight = *free_mem;
+    (*free_mem) += outputs*inputs;
+
+    layer->output = *free_mem;
+    (*free_mem) += outputs;
+
+    layer->error = *free_mem;
+    (*free_mem) += outputs;
+
+    for(i = 0; i<inputs*outputs; ++i){
+        layer->weight[i] = ((float)rand())/((float)RAND_MAX);
+    }
 }
 void nn_layer_forward(float output[], const float input[], const float weight[], int inputs, int outputs, void (*act)(float*, int)){
     int i, j, neuron;
+    inputs += 1; //bias
     for(i = 0; i<outputs; ++i){
-        output[i] = 0;
         neuron = i*inputs;
-        for(j = 0; j<inputs; ++j){
+        output[i] = weight[neuron]; //bias
+        for(j = 1; j<inputs; ++j){
             output[i] += input[j] * weight[neuron+j];
         }
     }
