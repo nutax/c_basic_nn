@@ -1,5 +1,11 @@
 #include "nn/layer.h"
 
+void nn_layer_create(struct nn_layer *layer, int inputs, int outputs){
+
+}
+void nn_layer_destroy(struct nn_layer *layer){
+    
+}
 void nn_layer_forward(float output[], const float input[], const float weight[], int inputs, int outputs, void (*act)(float*, int)){
     int i, j, neuron;
     for(i = 0; i<outputs; ++i){
