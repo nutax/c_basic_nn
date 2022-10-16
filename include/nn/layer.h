@@ -3,20 +3,26 @@
 
 #include <stdlib.h>
 
+enum NN_LAYER_TYPE{NN_LAYER_INPUT, NN_LAYER_HIDDEN, NN_LAYER_OUTPUT};
+
 struct nn_layer;
 
-void nn_layer_create(float **free_mem, struct nn_layer *layer, int inputs, int outputs);
+void nn_layer_create(float **free_mem, struct nn_layer *layer, struct nn_layer *prev_layer, int neurons, enum NN_LAYER_TYPE type);
 void nn_layer_forward(float output[], const float input[], const float weight[], int inputs, int outputs, void (*act)(float*, int));
+
 void nn_layer_output_error(float output_e[], const float answer[], const float output[], int outputs);
 void nn_layer_input_error(float input_e[], const float output_e[], const float weight[], int inputs, int outputs);
 void nn_layer_update(float weight[], float output[], const float input[], const float output_e[], int inputs, int outputs, float rate, void (*dact)(float*, int));
 
 
 struct nn_layer{
+    int inputs;
     int outputs;
+    float *input_e;
+    float *input;
     float *weight;
     float *output;
-    float *error;
+    float *output_e;
 };
 
 #endif

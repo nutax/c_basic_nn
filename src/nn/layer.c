@@ -1,9 +1,12 @@
 #include "nn/layer.h"
 
-void nn_layer_create(float **free_mem, struct nn_layer *layer, int inputs, int outputs){
-    int i;
+void nn_layer_create(float **free_mem, struct nn_layer *layer, struct nn_layer *prev_layer, int outputs, enum NN_LAYER_TYPE type){
+    int i, inputs;
 
+    outputs += ((int)(type != NN_LAYER_OUTPUT) & 1);
     layer->outputs = outputs;
+
+    inputs = prev_layer->outputs;
 
     layer->weight = *free_mem;
     (*free_mem) += outputs*inputs;
