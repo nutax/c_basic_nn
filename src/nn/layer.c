@@ -1,6 +1,6 @@
 #include "nn/layer.h"
 
-void nn_layer_create(float **free_mem, struct nn_layer *layer, int outputs, enum NN_LAYER_TYPE type, struct nn_layer *prev_layer, void (*act)(float*, int), void (*dact)(float*, int)){
+void nn_layer_create(float **free_mem, struct nn_layer *layer, int outputs, enum NN_LAYER_TYPE type, struct nn_layer const *prev_layer, void (*act)(float*, int), void (*dact)(float*, int)){
     int i, inputs;
 
     layer->type = type;
@@ -15,7 +15,7 @@ void nn_layer_create(float **free_mem, struct nn_layer *layer, int outputs, enum
         inputs = prev_layer->outputs;
 
         layer->input = prev_layer->output;
-        layer->input_e = prev_layer->output_e;
+        layer->input_delta = prev_layer->output_delta;
 
         layer->weight = *free_mem;
         (*free_mem) += outputs*inputs;
@@ -23,7 +23,7 @@ void nn_layer_create(float **free_mem, struct nn_layer *layer, int outputs, enum
         layer->output = *free_mem;
         (*free_mem) += outputs;
 
-        layer->output_e = *free_mem;
+        layer->output_delta = *free_mem;
         (*free_mem) += outputs;
 
         for(i = 0; i<inputs*outputs; ++i){
@@ -65,36 +65,45 @@ void nn_layer_forward(struct nn_layer *layer){
     }
     layer->act(output, outputs);
 }
-void nn_layer_output_error(struct nn_layer *layer, float const answer[]){
+void nn_layer_output_delta(struct nn_layer *layer, float const answer[]){
     int i;
     int const outputs = layer->outputs;
 
     float const * const output = layer->output;
-    float * const output_e = layer->output_e;
+    float * const output_delta = layer->output_delta;
 
+    memcpy(output_delta, output, sizeof(float)*outputs);
+    layer->dact(output_delta, outputs);
     for(i = 0; i<outputs; ++i){
-        output_e[i] = answer[i] - output[i];
+        output_delta[i] *= (answer[i] - output[i]);
     }
 }
-void nn_layer_input_error(struct nn_layer *layer){
+void nn_layer_input_delta(struct nn_layer *layer){
     int i, j, neuron;
 
     int const inputs = layer->inputs;
     int const outputs = layer->outputs;
 
-    float const * const output_e = layer->output_e;
+    float const * const input = layer->input;
+    float const * const output_delta = layer->output_delta;
     float const * const weight = layer->weight;
-    
-    float * const input_e = layer->input_e;
-    
-    for(i = 0; i<inputs; ++i){
-        input_e[i] = 0;
-    }
+
+    float * const input_delta = layer->input_delta;
+
+    float input_delta_aux[inputs];
+    memset(input_delta_aux, 0, sizeof(float)*inputs);
+
     for(i = 0; i<outputs; ++i){
         neuron = i*inputs;
         for(j = 0; j < inputs; ++j){
-            input_e[j] += output_e[i]*weight[neuron+j];
+            input_delta_aux[j] += output_delta[i]*weight[neuron+j];
         }
+    }
+
+    memcpy(input_delta, input, sizeof(float)*inputs);
+    layer->dact(input_delta, inputs);
+    for(i = 0; i < inputs; ++i){
+        input_delta[i] *= input_delta_aux[i];
     }
 }
 void nn_layer_update(struct nn_layer *layer, float rate){
@@ -104,17 +113,14 @@ void nn_layer_update(struct nn_layer *layer, float rate){
     int const outputs = layer->outputs;
 
     float const * const input = layer->input;
+    float const * const output_delta = layer->output_delta;
     
-    float * const output = layer->output;
     float * const weight = layer->weight;
-
-    layer->dact(output, outputs);
-    float const * const output_d = output;
 
     for(i = 0; i<outputs; ++i){
         neuron = i*inputs;
         for(j = 0; j < inputs; ++j){
-            weight[neuron+j] = input[j]*output_d[i]*rate;
+            weight[neuron+j] = input[j]*output_delta[i]*rate;
         }
     }
 }
