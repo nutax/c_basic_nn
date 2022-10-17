@@ -28,7 +28,7 @@ int main(int argc, char **argv){
         for(j = 0; j<rows; ++j){
             row = order[j];
 
-            //Foward
+            //Forward
             nn_layer_output_load(layers+0, train_input+row*cols);
             nn_layer_forward(layers+1);
             nn_layer_forward(layers+2);
