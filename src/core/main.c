@@ -2,12 +2,12 @@
 
 
 float const learning_rate = 0.1;
-int const epochs = 1000;
+int const epochs = 10000;
 int const rows = 4;
 int const cols = 2;
-float const train_input[rows*cols] = {1, 1, 1, 0, 0, 1, 0, 0};
-float const train_output[rows] = {0, 1, 1, 0}; // XOR problem
-int order[rows] = {0, 1, 2, 3};
+float const train_input[] = {1, 1, 1, 0, 0, 1, 0, 0};
+float const train_output[] = {0, 1, 1, 0}; // XOR problem
+int order[] = {0, 1, 2, 3};
 
 float mem[1024];
 float *free_mem = mem;
@@ -41,6 +41,7 @@ int main(int argc, char **argv){
         }
     }
 
+    printf("%f\n", layers[2].output_e[0]);
     
 
 

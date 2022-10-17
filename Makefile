@@ -33,7 +33,7 @@ clean:
 	@echo Cleaned.
 
 $(TARGET): $(OBJS) | $(OBJDIR)
-	@$(LD) $(LDFLAGS) -L$(OBJDIR) -o $@ $^
+	@$(LD) -L$(OBJDIR) -o $@ $^ $(LDFLAGS)
 
 $(OBJS): $(OBJDIR)/%$(OBJEXT) : $(SRCDIR)/%$(SRCEXT) | $(OBJDIR)
 	@$(CC) $(CCFLAGS) -I$(INCDIR) -c -o $@ $?
