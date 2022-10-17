@@ -1,0 +1,209 @@
+
+
+INPUT: Load
+
+ ------ Layer: 0x55eb68b38060 ------ 
+Inputs:  0
+Outputs:  3
+
+Input ptr:  (nil)
+Input arr:  
+
+Output ptr:  0x55eb68b37060
+Output arr:  0.000000  0.000000  1.000000  
+
+ODelta ptr:  (nil)
+ODelta arr:  
+
+ ------ Layer: 0x55eb68b38060 ------ 
+Inputs:  0
+Outputs:  3
+
+Input ptr:  (nil)
+Input arr:  
+
+Output ptr:  0x55eb68b37060
+Output arr:  1.000000  1.000000  1.000000  
+
+ODelta ptr:  (nil)
+ODelta arr:  
+
+
+HIDDEN: Forward
+
+ ------ Layer: 0x55eb68b380a8 ------ 
+Inputs:  3
+Outputs:  3
+
+Input ptr:  0x55eb68b37060
+Input arr:  1.000000  1.000000  1.000000  
+
+Output ptr:  0x55eb68b37090
+Output arr:  0.000000  0.000000  1.000000  
+
+ODelta ptr:  0x55eb68b3709c
+ODelta arr:  0.000000  0.000000  0.000000  
+
+ ------ Layer: 0x55eb68b380a8 ------ 
+Inputs:  3
+Outputs:  3
+
+Input ptr:  0x55eb68b37060
+Input arr:  1.000000  1.000000  1.000000  
+
+Output ptr:  0x55eb68b37090
+Output arr:  0.831780  0.788372  0.731059  
+
+ODelta ptr:  0x55eb68b3709c
+ODelta arr:  0.000000  0.000000  0.000000  
+
+
+OUTPUT: Forward
+
+ ------ Layer: 0x55eb68b380f0 ------ 
+Inputs:  3
+Outputs:  1
+
+Input ptr:  0x55eb68b37090
+Input arr:  0.831780  0.788372  0.731059  
+
+Output ptr:  0x55eb68b370b4
+Output arr:  1.000000  
+
+ODelta ptr:  0x55eb68b370b8
+ODelta arr:  0.000000  
+
+ ------ Layer: 0x55eb68b380f0 ------ 
+Inputs:  3
+Outputs:  1
+
+Input ptr:  0x55eb68b37090
+Input arr:  0.831780  0.788372  0.731059  
+
+Output ptr:  0x55eb68b370b4
+Output arr:  0.878092  
+
+ODelta ptr:  0x55eb68b370b8
+ODelta arr:  0.000000  
+
+
+OUTPUT: Delta
+
+ ------ Layer: 0x55eb68b380f0 ------ 
+Inputs:  3
+Outputs:  1
+
+Input ptr:  0x55eb68b37090
+Input arr:  0.831780  0.788372  0.731059  
+
+Output ptr:  0x55eb68b370b4
+Output arr:  0.878092  
+
+ODelta ptr:  0x55eb68b370b8
+ODelta arr:  0.000000  
+
+ ------ Layer: 0x55eb68b380f0 ------ 
+Inputs:  3
+Outputs:  1
+
+Input ptr:  0x55eb68b37090
+Input arr:  0.831780  0.788372  0.731059  
+
+Output ptr:  0x55eb68b370b4
+Output arr:  0.878092  
+
+ODelta ptr:  0x55eb68b370b8
+ODelta arr:  -0.093997  
+
+
+HIDDEN: Delta
+
+ ------ Layer: 0x55eb68b380a8 ------ 
+Inputs:  3
+Outputs:  3
+
+Input ptr:  0x55eb68b37060
+Input arr:  1.000000  1.000000  1.000000  
+
+Output ptr:  0x55eb68b37090
+Output arr:  0.831780  0.788372  0.731059  
+
+ODelta ptr:  0x55eb68b3709c
+ODelta arr:  0.000000  0.000000  0.000000  
+
+ ------ Layer: 0x55eb68b380a8 ------ 
+Inputs:  3
+Outputs:  3
+
+Input ptr:  0x55eb68b37060
+Input arr:  1.000000  1.000000  1.000000  
+
+Output ptr:  0x55eb68b37090
+Output arr:  0.831780  0.788372  0.731059  
+
+ODelta ptr:  0x55eb68b3709c
+ODelta arr:  -0.009727  -0.000636  -0.008275  
+
+
+OUTPUT: Update
+
+ ------ Layer: 0x55eb68b380f0 ------ 
+Inputs:  3
+Outputs:  1
+
+Input ptr:  0x55eb68b37090
+Input arr:  0.831780  0.788372  0.731059  
+
+Output ptr:  0x55eb68b370b4
+Output arr:  0.878092  
+
+ODelta ptr:  0x55eb68b370b8
+ODelta arr:  -0.093997  
+
+ ------ Layer: 0x55eb68b380f0 ------ 
+Inputs:  3
+Outputs:  1
+
+Input ptr:  0x55eb68b37090
+Input arr:  0.831780  0.788372  0.731059  
+
+Output ptr:  0x55eb68b370b4
+Output arr:  0.878092  
+
+ODelta ptr:  0x55eb68b370b8
+ODelta arr:  -0.093997  
+
+
+HIDDEN: Update
+
+ ------ Layer: 0x55eb68b380a8 ------ 
+Inputs:  3
+Outputs:  3
+
+Input ptr:  0x55eb68b37060
+Input arr:  1.000000  1.000000  1.000000  
+
+Output ptr:  0x55eb68b37090
+Output arr:  0.831780  0.788372  0.731059  
+
+ODelta ptr:  0x55eb68b3709c
+ODelta arr:  -0.009727  -0.000636  -0.008275  
+
+ ------ Layer: 0x55eb68b380a8 ------ 
+Inputs:  3
+Outputs:  3
+
+Input ptr:  0x55eb68b37060
+Input arr:  1.000000  1.000000  1.000000  
+
+Output ptr:  0x55eb68b37090
+Output arr:  0.831780  0.788372  0.731059  
+
+ODelta ptr:  0x55eb68b3709c
+ODelta arr:  -0.009727  -0.000636  -0.008275  
+1.000000 XOR 1.000000 == 0.703880
+0.000000 XOR 1.000000 == 0.666349
+0.000000 XOR 0.000000 == 0.657957
+1.000000 XOR 0.000000 == 0.656067
+hello
+Executed.

@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "hello/hello.h"
 #include "nn/layer.h"
 #include "nn/activ.h"

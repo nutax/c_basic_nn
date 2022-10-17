@@ -25,27 +25,45 @@ int main(){
     
     for(i = 0; i<epochs; ++i){
         shuffle(order, rows);
-        for(j = 0; j<rows; ++j){
+        for(j = 0; j<1; ++j){
             row = order[j];
 
             //Forward
+            printf("\n\nINPUT: Load\n");
             nn_layer_print(layers+0);
             nn_layer_output_load(layers+0, train_input+row*cols);
             nn_layer_print(layers+0);
 
+            printf("\n\nHIDDEN: Forward\n");
             nn_layer_print(layers+1);
             nn_layer_forward(layers+1);
             nn_layer_print(layers+1);
 
+            printf("\n\nOUTPUT: Forward\n");
             nn_layer_print(layers+2);
             nn_layer_forward(layers+2);
             nn_layer_print(layers+2);
 
             //Backward
+            printf("\n\nOUTPUT: Delta\n");
+            nn_layer_print(layers+2);
             nn_layer_output_delta(layers+2, train_output+row);
+            nn_layer_print(layers+2);
+            
+            printf("\n\nHIDDEN: Delta\n");
+            nn_layer_print(layers+1);
             nn_layer_input_delta(layers+2);
+            nn_layer_print(layers+1);
+
+            printf("\n\nOUTPUT: Update\n");
+            nn_layer_print(layers+2);
             nn_layer_update(layers+2, learning_rate);
+            nn_layer_print(layers+2);
+            
+            printf("\n\nHIDDEN: Update\n");
+            nn_layer_print(layers+1);
             nn_layer_update(layers+1, learning_rate);
+            nn_layer_print(layers+1);
         }
     }
 
