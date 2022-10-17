@@ -33,23 +33,31 @@ void nn_layer_create(float **free_mem, struct nn_layer *layer, int outputs, enum
         layer->output = *free_mem;
         (*free_mem) += outputs;
     }
+    layer->output[outputs-1] = 1;
 }
 void nn_layer_forward(struct nn_layer *layer){
     int i, j, neuron;
     
     int const inputs = layer->inputs;
     int const outputs = layer->outputs;
+    int const last = outputs - 1;
 
     float const * const input = layer->input;
     float const * const weight = layer->weight;
 
     float * const output = layer->output;
-
-    for(i = 0; i<outputs; ++i){
+    
+    for(i = 0; i<last; ++i){
         neuron = i*inputs;
-        output[i] = weight[neuron]; //bias
-        for(j = 1; j<inputs; ++j){
+        output[i] = 0;
+        for(j = 0; j<inputs; ++j){
             output[i] += input[j] * weight[neuron+j];
+        }
+    }
+    if(layer->type == NN_LAYER_OUTPUT){
+        neuron = last*inputs;
+        for(j = 0; j<inputs; ++j){
+            output[last] += input[j] * weight[neuron+j];
         }
     }
     layer->act(output, outputs);
@@ -99,7 +107,7 @@ void nn_layer_update(struct nn_layer *layer, int rate){
 
     dact(output, outputs);
     float const * const output_d = output;
-    
+
     for(i = 0; i<outputs; ++i){
         neuron = i*inputs;
         for(j = 0; j < inputs; ++j){
