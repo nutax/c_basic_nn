@@ -105,7 +105,7 @@ void nn_layer_update(struct nn_layer *layer, int rate){
     float * const output = layer->output;
     float * const weight = layer->weight;
 
-    dact(output, outputs);
+    layer->dact(output, outputs);
     float const * const output_d = output;
 
     for(i = 0; i<outputs; ++i){
