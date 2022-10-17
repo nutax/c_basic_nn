@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 enum NN_LAYER_TYPE{NN_LAYER_INPUT, NN_LAYER_HIDDEN, NN_LAYER_OUTPUT};
 
@@ -14,7 +15,7 @@ void nn_layer_forward(struct nn_layer *layer);
 void nn_layer_output_delta(struct nn_layer *layer, float const answer[]);
 void nn_layer_input_delta(struct nn_layer *layer);
 void nn_layer_update(struct nn_layer *layer, float rate);
-
+void nn_layer_print(struct nn_layer *layer);
 
 struct nn_layer{
     enum NN_LAYER_TYPE type;

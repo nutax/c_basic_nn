@@ -1,6 +1,6 @@
 #include "core/main.h"
 
-int const epochs = 10000;
+int const epochs = 1;
 int const rows = 4;
 int const cols = 2;
 
@@ -29,9 +29,17 @@ int main(){
             row = order[j];
 
             //Forward
+            nn_layer_print(layers+0);
             nn_layer_output_load(layers+0, train_input+row*cols);
+            nn_layer_print(layers+0);
+
+            nn_layer_print(layers+1);
             nn_layer_forward(layers+1);
+            nn_layer_print(layers+1);
+
+            nn_layer_print(layers+2);
             nn_layer_forward(layers+2);
+            nn_layer_print(layers+2);
 
             //Backward
             nn_layer_output_delta(layers+2, train_output+row);

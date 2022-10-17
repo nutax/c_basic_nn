@@ -14,6 +14,7 @@ void nn_layer_create(float **free_mem, struct nn_layer *layer, int outputs, enum
 
         inputs = prev_layer->outputs;
 
+        layer->inputs = inputs;
         layer->input = prev_layer->output;
         layer->input_delta = prev_layer->output_delta;
 
@@ -123,4 +124,34 @@ void nn_layer_update(struct nn_layer *layer, float rate){
             weight[neuron+j] = input[j]*output_delta[i]*rate;
         }
     }
+}
+void nn_layer_print(struct nn_layer *layer){
+    int i;
+    static char const * const spacer = " ------ ";
+    int const inputs = layer->inputs;
+    int const outputs = layer->outputs;
+    float const * const input = layer->input;
+    float const * const output = layer->output;
+    float const * const input_delta = layer->input_delta;
+    float const * const output_delta = layer->output_delta;
+
+    printf("\n%sLayer: %p%s", spacer, layer, spacer);
+    printf("\nInputs:  %d", inputs);
+    printf("\nOutputs:  %d", outputs);
+    printf("\n\nInput ptr:  %p", input);
+    printf("\nInput arr:  ");
+    for(i = 0; i<inputs; ++i){
+        printf("%f  ", input[i]);
+    }
+    printf("\n\nOutput ptr:  %p", output);
+    printf("\nOutput arr:  ");
+    for(i = 0; i<outputs; ++i){
+        printf("%f  ", output[i]);
+    }
+    printf("\n\nODelta ptr:  %p", output_delta);
+    printf("\nODelta arr:  ");
+    for(i = 0; i<outputs*((layer->type != NN_LAYER_INPUT) & 1); ++i){
+        printf("%f  ", output_delta[i]);
+    }
+    printf("\n");
 }
