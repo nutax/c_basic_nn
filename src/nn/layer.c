@@ -35,6 +35,9 @@ void nn_layer_create(float **free_mem, struct nn_layer *layer, int outputs, enum
     }
     layer->output[outputs-1] = 1;
 }
+void nn_layer_output_load(struct nn_layer *layer, float const output[]){
+    memcpy(layer->output, output, sizeof(float)*(layer->outputs - 1));
+}
 void nn_layer_forward(struct nn_layer *layer){
     int i, j, neuron;
     
@@ -94,7 +97,7 @@ void nn_layer_input_error(struct nn_layer *layer){
         }
     }
 }
-void nn_layer_update(struct nn_layer *layer, int rate){
+void nn_layer_update(struct nn_layer *layer, float rate){
     int i, j, neuron;
 
     int const inputs = layer->inputs;
